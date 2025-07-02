@@ -68,26 +68,5 @@ public class ProductosController {
         }
     }
 
-    // @GetMapping("/productos/{id}")
-    // public Optional<ProductoEntity> readById(@PathVariable Integer id) {
-    //     return productoService.readById(id);
-    // }
-
-    // @PostMapping("/productos")
-    // public ProductoResponse create(@RequestBody ProductoEntity productoEntity) {
-    //     return productoService.create(productoEntity);
-    // }
-
-    // @PutMapping("/productos")
-    // public ProductoEntity update(@RequestBody ProductoEntity productoEntity) {
-    //     return productoService.update(productoEntity);
-    // }
-
-    // @DeleteMapping("/productos/{id}")
-    // public String delete(@PathVariable Integer id) {
-    //     return productoService.deleteById(id);
-    // }
-
-
 }
 
