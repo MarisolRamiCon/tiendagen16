@@ -5,7 +5,7 @@ import ms.tiendagen16.response.InventarioResponse;
 
 import java.util.List;
 
-public interface IServiceInventario {
+public interface IInventarioService {
 
 
 

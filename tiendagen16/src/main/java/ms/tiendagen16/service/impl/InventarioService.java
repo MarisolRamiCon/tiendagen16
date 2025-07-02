@@ -3,7 +3,7 @@ package ms.tiendagen16.service.impl;
 import ms.tiendagen16.entity.InventarioEntity;
 import ms.tiendagen16.repository.InventarioRepository;
 import ms.tiendagen16.response.InventarioResponse;
-import ms.tiendagen16.service.IServiceInventario;
+import ms.tiendagen16.service.IInventarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @Service
-public class InventarioService implements IServiceInventario {
+public class InventarioService implements IInventarioService {
 
     @Autowired
     private InventarioRepository inventarioRepository;
