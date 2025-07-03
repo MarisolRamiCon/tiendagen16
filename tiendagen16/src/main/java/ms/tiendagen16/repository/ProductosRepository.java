@@ -12,4 +12,6 @@ public interface ProductosRepository extends JpaRepository<ProductosEntity, Inte
     @Query(value = "SELECT * FROM productos WHERE categoria = :categoria", nativeQuery = true)
     List<ProductosEntity> queryByCategoria(String categoria);
 
+    List<ProductosEntity> findByProveedor(Integer proveedor);
+
 }

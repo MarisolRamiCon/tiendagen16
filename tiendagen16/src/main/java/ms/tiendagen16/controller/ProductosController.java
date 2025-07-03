@@ -68,5 +68,15 @@ public class ProductosController {
         }
     }
 
+
+    @GetMapping("/productos/findproveedor")
+    public ResponseEntity<List<ProductosResponse>> findByProveedor(@RequestParam("proveedor") Integer proveedor) {
+        List<ProductosResponse> productosResponses = productosService.findByProveedor(proveedor);
+        if (productosResponses.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(productosResponses);
+    }
+
 }
 

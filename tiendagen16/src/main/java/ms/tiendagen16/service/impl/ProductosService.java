@@ -100,4 +100,18 @@ public class ProductosService implements IProductosService {
                 .map(mapToResponse)
                 .toList();
     }
+
+    @Override
+    public List<ProductosResponse> findByProveedor(Integer proveedor) {
+        List<ProductosEntity> productosEntities = productosRepository.findByProveedor(proveedor);
+        if (productosEntities.isEmpty()) {
+            return List.of();
+        }
+        // Filtrar los productos activos y mapearlos a ProductosResponse
+        return productosEntities.stream()
+                .filter(producto -> producto.getActivo())
+                .map(mapToResponse)
+                .toList();
+    }
+
 }

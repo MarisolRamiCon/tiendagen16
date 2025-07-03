@@ -51,17 +51,29 @@ public class DetallesPedidoService implements IDetallesPedidoService {
     }
 
     @Override
-    public DetallesPedidoResponse create(DetallesPedidoEntity detallesPedidoEntity) {
-        DetallesPedidoEntity savedEntity = detallesPedidoRepository.save(detallesPedidoEntity);
+    public DetallesPedidoResponse create(DetallesPedidoEntity detallesPedidoEntity) throws Exception {
+        DetallesPedidoEntity savedEntity = null;
+        try{
+            savedEntity = detallesPedidoRepository.save(detallesPedidoEntity);
+        }catch(Exception e){
+           throw new Exception("Error al guardar el detalle del pedido: " + e.getMessage());
+        }
+
         return mapToResponse.apply(savedEntity);
     }
 
     @Override
-    public DetallesPedidoResponse update(DetallesPedidoEntity detallesPedidoEntity) {
+    public DetallesPedidoResponse update(DetallesPedidoEntity detallesPedidoEntity) throws Exception {
         Optional<DetallesPedidoEntity> findedEntityOpt = detallesPedidoRepository.findById(detallesPedidoEntity.getId());
         if(findedEntityOpt.isPresent()) {
-            DetallesPedidoEntity updatedEntity = detallesPedidoRepository.save(detallesPedidoEntity);
-            return mapToResponse.apply(updatedEntity);
+            DetallesPedidoEntity updatedEntity = null;
+            try {
+                updatedEntity = detallesPedidoRepository.save(detallesPedidoEntity);
+                return mapToResponse.apply(updatedEntity);
+            }catch(Exception e){
+                throw new Exception("Error al actualizar el detalle del pedido: " + e.getMessage());
+            }
+
         }else{
             return null; // or throw an exception if you prefer
         }
@@ -89,4 +101,14 @@ public class DetallesPedidoService implements IDetallesPedidoService {
                 .map(mapToResponse)
                 .toList();
     }
+
+    @Override
+    public List<DetallesPedidoResponse> findByProductoId(Integer productoId) {
+        return detallesPedidoRepository.findByProductoId(productoId)
+                .stream()
+                .filter(p -> p.getActivo())
+                .map(mapToResponse)
+                .toList();
+    }
+
 }

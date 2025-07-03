@@ -39,17 +39,31 @@ public class DetallesPedidoController {
 
     @PostMapping("/detalles-pedido")
     public ResponseEntity<DetallesPedidoResponse> create(@RequestBody DetallesPedidoEntity detallesPedidoEntity) {
-        DetallesPedidoResponse createdDetallesPedido = detallesPedidoService.create(detallesPedidoEntity);
+        DetallesPedidoResponse createdDetallesPedido = null;
+        try {
+            createdDetallesPedido = detallesPedidoService.create(detallesPedidoEntity);
+        }catch(Exception e){
+            // Log the exception (optional)
+            System.err.println("Error creating DetallesPedido: " + e.getMessage());
+            return ResponseEntity.status(500).build();
+        }
+
         return ResponseEntity.status(201).body(createdDetallesPedido);
     }
 
     @PutMapping("/detalles-pedido")
     public ResponseEntity<DetallesPedidoResponse> update(@RequestBody DetallesPedidoEntity detallesPedidoEntity) {
-        DetallesPedidoResponse updatedDetallesPedido = detallesPedidoService.update(detallesPedidoEntity);
-        if (updatedDetallesPedido != null) {
-            return ResponseEntity.ok(updatedDetallesPedido);
-        } else {
-            return ResponseEntity.notFound().build();
+        try{
+            DetallesPedidoResponse updatedDetallesPedido = detallesPedidoService.update(detallesPedidoEntity);
+            if (updatedDetallesPedido != null) {
+                return ResponseEntity.ok(updatedDetallesPedido);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        }catch (Exception e){
+            // Log the exception (optional)
+            System.err.println("Error updating DetallesPedido: " + e.getMessage());
+            return ResponseEntity.status(500).build();
         }
     }
 
@@ -66,6 +80,15 @@ public class DetallesPedidoController {
     @GetMapping("/detalles-pedido/querypedidoid")
     public ResponseEntity<List<DetallesPedidoResponse>> queryByPedido(@RequestParam("pedidoid") Integer pedido) {
         List<DetallesPedidoResponse> detallesPedidoResponses = detallesPedidoService.queryByPedidoId(pedido);
+        if (detallesPedidoResponses.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(detallesPedidoResponses);
+    }
+
+    @GetMapping("/detalles-pedido/findproductoid")
+    public ResponseEntity<List<DetallesPedidoResponse>> findByProductoId(@RequestParam("productoid") Integer productoId) {
+        List<DetallesPedidoResponse> detallesPedidoResponses = detallesPedidoService.findByProductoId(productoId);
         if (detallesPedidoResponses.isEmpty()) {
             return ResponseEntity.noContent().build();
         }

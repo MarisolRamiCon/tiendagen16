@@ -11,4 +11,6 @@ public interface InventarioRepository extends JpaRepository<InventarioEntity, In
     @Query(value = "SELECT * FROM inventario WHERE producto LIKE %:producto%", nativeQuery = true)
     List<InventarioEntity> queryByProducto(String producto);
 
+    List<InventarioEntity> findByActivo(Boolean activo);
+
 }

@@ -12,4 +12,6 @@ public interface DetallesPedidoRepository  extends JpaRepository<DetallesPedidoE
     @Query(value = "SELECT * FROM detalles_pedido WHERE pedido_id = :pedidoId", nativeQuery = true)
     List<DetallesPedidoEntity> queryByPedidoId(Integer pedidoId);
 
+    List<DetallesPedidoEntity> findByProductoId(Integer productoId);
+
 }

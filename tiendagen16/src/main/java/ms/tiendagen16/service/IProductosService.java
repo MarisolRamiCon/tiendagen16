@@ -25,4 +25,7 @@ public interface IProductosService {
     // Metodo para buscar productos por categoria
     List<ProductosResponse> queryByCategoria(String categoria);
 
+    // Metodo para buscar productos por proveedor
+    List<ProductosResponse> findByProveedor(Integer proveedor);
+
 }

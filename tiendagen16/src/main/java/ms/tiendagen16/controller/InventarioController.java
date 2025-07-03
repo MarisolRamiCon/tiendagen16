@@ -70,6 +70,15 @@ public class InventarioController {
         }
     }
 
+    @GetMapping("/inventario/findactivo")
+    public ResponseEntity<List<InventarioResponse>> findByActivo(@PathParam("activo") Boolean activo) {
+        List<InventarioResponse> inventarios = inventarioService.findByActivo(activo);
+        if (inventarios != null && !inventarios.isEmpty()) {
+            return ResponseEntity.ok(inventarios);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 
 }

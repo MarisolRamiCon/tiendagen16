@@ -84,4 +84,12 @@ public class InventarioService implements IInventarioService {
                                         .toList();
         }
 
+    @Override
+    public List<InventarioResponse> findByActivo(Boolean activo) {
+        return inventarioRepository.findByActivo(activo)
+                                    .stream()
+                                    .map(mapToDtoResponse)
+                                    .toList();
+    }
+
 }

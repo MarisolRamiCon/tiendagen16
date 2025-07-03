@@ -15,5 +15,6 @@ public interface IInventarioService {
     InventarioResponse update(InventarioEntity inventarioEntity);
     String deleteById(Integer id);
     List<InventarioResponse> queryByProducto(String producto);
+    List<InventarioResponse> findByActivo(Boolean activo);
 
 }
