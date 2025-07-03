@@ -58,20 +58,34 @@ public class ProductosService implements IProductosService {
     }
 
     @Override
-    public ProductosResponse create(ProductosEntity productoEntity) {
-        ProductosEntity savedEntity = productosRepository.save(productoEntity);
-        return mapToResponse.apply(savedEntity);
+    public ProductosResponse create(ProductosEntity productoEntity) throws Exception {
+
+        try {
+            ProductosEntity savedEntity = productosRepository.save(productoEntity);
+            return mapToResponse.apply(savedEntity);
+        } catch (Exception e) {
+            throw new Exception("Error al crear el producto: " + e.getMessage());
+        }
+
     }
 
     @Override
-    public ProductosResponse update(ProductosEntity productoEntity) {
-        Optional<ProductosEntity> existingEntity = productosRepository.findById(productoEntity.getId());
-        if (existingEntity.isPresent()) {
-            ProductosEntity updatedEntity = productosRepository.save(productoEntity);
-            return mapToResponse.apply(updatedEntity);
-        }else{
-           return null; // Or throw new ProductoNotFoundException("Producto no encontrado con ID: " + productoEntity.getId());
+    public ProductosResponse update(ProductosEntity productoEntity) throws Exception {
+
+        try{
+
+            Optional<ProductosEntity> existingEntity = productosRepository.findById(productoEntity.getId());
+            if (existingEntity.isPresent()) {
+                ProductosEntity updatedEntity = productosRepository.save(productoEntity);
+                return mapToResponse.apply(updatedEntity);
+            }else{
+                return null; // Or throw new ProductoNotFoundException("Producto no encontrado con ID: " + productoEntity.getId());
+            }
+
+        }catch (Exception e){
+            throw new Exception("Error al actualizar el producto: " + e.getMessage());
         }
+
     }
 
     @Override

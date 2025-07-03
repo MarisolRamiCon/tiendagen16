@@ -35,18 +35,32 @@ public class ProductosController {
 
      @PostMapping("/productos")
      public ResponseEntity<ProductosResponse> create(@RequestBody ProductosEntity productosEntity) {
-        ProductosResponse createdProducto = productosService.create(productosEntity);
-        return ResponseEntity.status(201).body(createdProducto);
+
+         try{
+             ProductosResponse createdProducto = productosService.create(productosEntity);
+             return ResponseEntity.status(201).body(createdProducto);
+         }catch(Exception e){
+             return ResponseEntity.internalServerError().build();
+         }
+
+
      }
 
     @PutMapping("/productos")
     public ResponseEntity<ProductosResponse> update(@RequestBody ProductosEntity productosEntity) {
-        ProductosResponse updatedProducto = productosService.update(productosEntity);
-        if (updatedProducto != null) {
-            return ResponseEntity.ok(updatedProducto);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+
+         try{
+             ProductosResponse updatedProducto = productosService.update(productosEntity);
+             if (updatedProducto != null) {
+                 return ResponseEntity.ok(updatedProducto);
+             } else {
+                 return ResponseEntity.notFound().build();
+             }
+         }catch(Exception e){
+                return ResponseEntity.internalServerError().build();
+         }
+
+
     }
 
     @GetMapping("/productos/querycategoria")

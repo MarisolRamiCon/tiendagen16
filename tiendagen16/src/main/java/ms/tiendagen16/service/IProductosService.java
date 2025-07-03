@@ -14,10 +14,10 @@ public interface IProductosService {
     ProductosResponse readById(Integer id);
 
     // Metodo create
-    ProductosResponse create(ProductosEntity productoEntity);
+    ProductosResponse create(ProductosEntity productoEntity) throws Exception;
 
     // Metodo update
-    ProductosResponse update(ProductosEntity productoEntity);
+    ProductosResponse update(ProductosEntity productoEntity) throws Exception;
 
     // Metodo Delete
     String deleteById(Integer id);

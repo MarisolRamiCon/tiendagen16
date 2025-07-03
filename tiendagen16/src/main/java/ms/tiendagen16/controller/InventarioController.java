@@ -36,18 +36,31 @@ public class InventarioController {
 
     @PostMapping("/inventario")
     public ResponseEntity<InventarioResponse> create(@RequestBody InventarioEntity inventarioEntity) {
-        InventarioResponse createdInventario = inventarioService.create(inventarioEntity);
-        return ResponseEntity.status(201).body(createdInventario);
+         try{
+           InventarioResponse createdInventario = inventarioService.create(inventarioEntity);
+           return ResponseEntity.status(201).body(createdInventario);
+         }catch (Exception e){
+             return ResponseEntity.internalServerError().build();
+         }
     }
 
     @PutMapping("/inventario")
     public ResponseEntity<InventarioResponse> update(@RequestBody InventarioEntity inventarioEntity) {
-        InventarioResponse updatedInventario = inventarioService.update(inventarioEntity);
-        if (updatedInventario != null) {
-            return ResponseEntity.ok(updatedInventario);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+
+         try{
+
+             InventarioResponse updatedInventario = inventarioService.update(inventarioEntity);
+             if (updatedInventario != null) {
+                 return ResponseEntity.ok(updatedInventario);
+             } else {
+                 return ResponseEntity.notFound().build();
+             }
+
+         }catch (Exception e){
+             return ResponseEntity.internalServerError().build();
+         }
+
+
     }
 
     @DeleteMapping("/inventario/{id}")

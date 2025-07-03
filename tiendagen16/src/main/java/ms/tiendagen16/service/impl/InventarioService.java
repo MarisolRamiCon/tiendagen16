@@ -17,7 +17,7 @@ public class InventarioService implements IInventarioService {
     @Autowired
     private InventarioRepository inventarioRepository;
 
-    private Function<InventarioEntity,InventarioResponse> mapToDtoResponse = new Function<InventarioEntity, InventarioResponse>() {
+    Function<InventarioEntity,InventarioResponse> mapToDtoResponse = new Function<InventarioEntity, InventarioResponse>() {
         @Override
         public InventarioResponse apply(InventarioEntity inventarioEntity) {
             InventarioResponse inventarioResponse = new InventarioResponse();
@@ -45,16 +45,29 @@ public class InventarioService implements IInventarioService {
                                      .toList();
      }
 
-     public InventarioResponse create(InventarioEntity inventarioEntity) {
-            InventarioEntity inventarioEntitySaved = inventarioRepository.save(inventarioEntity);
-            return mapToDtoResponse.apply(inventarioEntitySaved);
+     public InventarioResponse create(InventarioEntity inventarioEntity) throws Exception {
+
+            try{
+                InventarioEntity inventarioEntitySaved = inventarioRepository.save(inventarioEntity);
+                return mapToDtoResponse.apply(inventarioEntitySaved);
+            }catch(Exception e){
+                throw new Exception("Error al crear el inventario: " + e.getMessage());
+            }
+
+
      }
 
-     public InventarioResponse update(InventarioEntity inventarioEntity) {
+     public InventarioResponse update(InventarioEntity inventarioEntity) throws Exception {
             Optional<InventarioEntity> existingInventario = inventarioRepository.findById(inventarioEntity.getId());
             if (existingInventario.isPresent()) {
-                InventarioEntity updatedInventarioEntity = inventarioRepository.save(inventarioEntity);
-                return mapToDtoResponse.apply(updatedInventarioEntity);
+
+                try{
+                    InventarioEntity updatedInventarioEntity = inventarioRepository.save(inventarioEntity);
+                    return mapToDtoResponse.apply(updatedInventarioEntity);
+                }catch(Exception e){
+                    throw new Exception("Error al actualizar el inventario: " + e.getMessage());
+                }
+
             } else {
                 return null; // or throw an exception if preferred
             }
